@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite;
 
-namespace Flashcard.DataModel
+namespace Flashcard.Models
 {
     [Table("Categories")]
     public class Category
     {
-        [PrimaryKey, Unique]
-        public Guid Id { get; set; }
+        [PrimaryKey,AutoIncrement, Unique]
+        public int Id { get; set; }
         public String Name { get; set; }
     }
 }

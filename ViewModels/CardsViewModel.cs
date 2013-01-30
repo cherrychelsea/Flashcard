@@ -4,45 +4,132 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Flashcard;
+using SQLite;
+using Flashcard.Models;
+
 namespace Flashcard.ViewModels
 {
-    [Windows.Foundation.Metadata.WebHostHidden]
-    public class CardsViewModel : Flashcard.Common.BindableBase
+    public class CardViewModel : ViewModelBase
     {
-        public CardsViewModel(String uniqueid, String frontContent, String backContent, DecksViewModel deck)
+        #region Properties
+
+        private int _id = 0;
+        public int Id
         {
-            this._uniqueid = uniqueid;
-            this._frontContent = frontContent;
-            this._backContent = backContent;
-            this._deck = deck;
+            get 
+            { 
+                return this._id; 
+            }
+            set 
+            {
+                if (_id == value)
+                { return; }
+
+                _id = value;
+                RaisePropertyChanged("Id");
+            }
         }
 
-        private String _uniqueid = String.Empty;
-        public String UniqueId
+        private string _frontContent = String.Empty;
+        public string FrontContent
         {
-            get { return this._uniqueid; }
-            set { this.SetProperty(ref this._uniqueid, value); }
+            get 
+            { 
+                return this._frontContent; 
+            }
+            set 
+            {
+                if (_frontContent == value)
+                { return; }
+
+                _frontContent = value;
+                RaisePropertyChanged("FrontContent");
+            }
         }
 
-        private String _frontContent = String.Empty;
-        public String FrontContent
+        private string _backContent = String.Empty;
+        public string BackContent
         {
-            get { return this._frontContent; }
-            set { this.SetProperty(ref this._frontContent, value); }
+            get 
+            { 
+                return this._backContent; 
+            }
+            set 
+            {
+                if (_backContent == value)
+                { return; }
+
+                _backContent = value;
+                RaisePropertyChanged("BackContent");
+            }
         }
 
-        private String _backContent = String.Empty;
-        public String BackContent
+        private int _deckId = 0;
+        public int DeckId
         {
-            get { return this._backContent; }
-            set { this.SetProperty(ref this._backContent, value); }
+            get 
+            {
+                return this._deckId;
+            }
+            set 
+            {
+                if (_deckId == value)
+                { return; }
+                _deckId = value;
+                RaisePropertyChanged("DeckId");
+            }
         }
 
-        private DecksViewModel _deck = null;
-        public DecksViewModel Deck
+        #endregion Properties
+
+        public async Task<CardViewModel> GetCard(int cardId)
         {
-            get { return this._deck; }
-            set { this._deck = value; }
+            var card = new CardViewModel();
+
+            var db = new SQLiteAsyncConnection(App.DBPath);
+            var _card = await db.FindAsync<Card>(c1 => c1.Id == cardId);
+
+            if (_card == null)
+                return null;
+
+            card.Id = _card.Id;
+            card.FrontContent = _card.FrontContent;
+            card.BackContent = _card.BackContent;
+            card.DeckId = _card.DeckId;
+
+            return card;
         }
+
+        public async Task<string> GetFrontContent(int cardId)
+        {
+            string frontContent = String.Empty;
+
+            var db = new SQLiteAsyncConnection(App.DBPath);
+            var _card = await db.FindAsync<Card>(c1 => c1.Id == cardId);
+
+            if (_card == null)
+                return null;
+
+            frontContent = _card.FrontContent;
+
+            return frontContent;
+        }
+
+        public async Task<string> GetBackContent(int cardId)
+        {
+            string backContent = String.Empty;
+
+            var db = new SQLiteAsyncConnection(App.DBPath);
+            var _card = await db.FindAsync<Card>(c1 => c1.Id == cardId);
+
+            if (_card == null)
+                return null;
+
+            backContent = _card.BackContent;
+
+            return backContent;
+        }
+
+        public async Task<string> SaveCard()
     }
 }

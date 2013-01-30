@@ -27,6 +27,9 @@ namespace Flashcard
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
+        /// 
+
+        public static String DBPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "MyDatabase.db");
         public App()
         {
             this.InitializeComponent();

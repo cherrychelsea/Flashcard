@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite;
 
-namespace Flashcard.DataModel
+namespace Flashcard.Models
 {
     [Table("Cards")]
     public class Card
     {
-        [PrimaryKey, Unique]
-        public Guid Id { get; set; }
+        [PrimaryKey, AutoIncrement, Unique]
+        public int Id { get; set; }
         public String FrontContent { get; set; }
         public String BackContent { get; set; }
-        public Guid DeckId { get; set; }
+        public int DeckId { get; set; }
     }
 }
