@@ -49,7 +49,7 @@ namespace Flashcard
                 FlashcardDataSource.DeleteCategory(category);
         }
 
-        public static DecksViewModel GetDeck(CategoriesViewModel category,String title)
+        public static DeckViewModel GetDeck(CategoriesViewModel category,String title)
         {
             var _decks = FlashcardDataSource.GetDecks(category);
             foreach (var _deck in _decks)
@@ -65,12 +65,12 @@ namespace Flashcard
             var _deck = GetDeck(category, title);
             if (_deck == null)
             {
-                _deck = new DecksViewModel("", category, title, author, subject, description, imagePath);
+                _deck = new DeckViewModel("", category, title, author, subject, description, imagePath);
                 FlashcardDataSource.AddDeck(_deck);
             }
         }
 
-        public static void ClickEditDeck(DecksViewModel deck, String title, String author, String subject, String description, String imagePath)
+        public static void ClickEditDeck(DeckViewModel deck, String title, String author, String subject, String description, String imagePath)
         {
             if (deck != null)
             {
@@ -83,7 +83,7 @@ namespace Flashcard
             }
         }
 
-        public static void ClickDeleteDeck(DecksViewModel deck)
+        public static void ClickDeleteDeck(DeckViewModel deck)
         {
             if (deck != null)
             {
@@ -91,7 +91,7 @@ namespace Flashcard
             }
         }
 
-        public static CardsViewModel GetCard(DecksViewModel deck, String frontContent)
+        public static CardsViewModel GetCard(DeckViewModel deck, String frontContent)
         {
             var _cards = FlashcardDataSource.GetCards(deck);
             foreach (var _card in _cards)
@@ -104,7 +104,7 @@ namespace Flashcard
             return null;
         }
 
-        public static void ClickAddCard(DecksViewModel deck, String frontContent, String backContent)
+        public static void ClickAddCard(DeckViewModel deck, String frontContent, String backContent)
         {
             var _card = GetCard(deck, frontContent);
             if (_card == null)

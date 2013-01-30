@@ -30,6 +30,22 @@ namespace Flashcard.ViewModels
             }
         }
 
+        private int _deckId = 0;
+        public int DeckId
+        {
+            get
+            {
+                return this._deckId;
+            }
+            set
+            {
+                if (_deckId == value)
+                { return; }
+                _deckId = value;
+                RaisePropertyChanged("DeckId");
+            }
+        }
+
         private string _frontContent = String.Empty;
         public string FrontContent
         {
@@ -43,6 +59,7 @@ namespace Flashcard.ViewModels
                 { return; }
 
                 _frontContent = value;
+                isDirty = true;
                 RaisePropertyChanged("FrontContent");
             }
         }
@@ -60,23 +77,23 @@ namespace Flashcard.ViewModels
                 { return; }
 
                 _backContent = value;
+                isDirty = true;
                 RaisePropertyChanged("BackContent");
             }
         }
 
-        private int _deckId = 0;
-        public int DeckId
+        private bool isDirty = false;
+        public bool IsDirty
         {
-            get 
+            get
             {
-                return this._deckId;
+                return isDirty;
             }
-            set 
+
+            set
             {
-                if (_deckId == value)
-                { return; }
-                _deckId = value;
-                RaisePropertyChanged("DeckId");
+                isDirty = value;
+                RaisePropertyChanged("IsDirty");
             }
         }
 
@@ -130,6 +147,55 @@ namespace Flashcard.ViewModels
             return backContent;
         }
 
-        public async Task<string> SaveCard()
+        public async Task<string> SaveCard(CardViewModel card)
+        {
+            string result = String.Empty;
+            var db = new SQLiteAsyncConnection(App.DBPath);
+
+            try
+            {
+                var existingCard = await (db.Table<Card>().Where(c1 => c1.Id == card.Id)).FirstOrDefaultAsync();
+
+                if (existingCard != null)
+                {
+                    existingCard.FrontContent = card.FrontContent;
+                    existingCard.BackContent = card.BackContent;
+                    int success = await db.UpdateAsync(existingCard);
+                }
+                else 
+                {
+                    var _card = new Card();
+                    _card.FrontContent = card.FrontContent;
+                    _card.BackContent = card.BackContent;
+                    _card.DeckId = card.DeckId;
+                    int success = await db.InsertAsync(_card);
+                }
+                result = "Success";
+            }
+            catch
+            {
+                result = "this card was not saved";
+            }
+            return result;
+        }
+
+        public async Task<string> DeleteCard(int cardId)
+        {
+            string result = string.Empty;
+            var db = new SQLite.SQLiteAsyncConnection(App.DBPath);
+
+            var existingProject = await (db.Table<Card>().Where(
+                c => c.Id == cardId)).FirstAsync();
+
+            if (await db.DeleteAsync(existingProject) > 0)
+            {
+                result = "Success";
+            }
+            else
+            {
+                result = "This project was not removed";
+            }
+            return result;
+        }
     }
 }

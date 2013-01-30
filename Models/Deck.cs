@@ -16,7 +16,6 @@ namespace Flashcard.Models
         public String Author { get; set; }
         public String Subject { get; set; }
         public String Description { get; set; }
-        public String ImagePath { get; set; }
         public int CategoryId { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace Flashcard.DataModel
             var category1 = new CategoriesViewModel("", "english");
             AddCategory(category1);
             AllCategories.Add(category1);
-            var deck1 = new DecksViewModel("", category1, "1001 words need to know", "Thang", "toefl", "", "");
+            var deck1 = new DeckViewModel("", category1, "1001 words need to know", "Thang", "toefl", "", "");
             AddDeck(deck1);
             AllDecks.Add(deck1);
             var card1 = new CardsViewModel("", "abc", "abc", deck1);
@@ -45,8 +45,8 @@ namespace Flashcard.DataModel
             get { return this._allCategories; }
         }
 
-        private ObservableCollection<DecksViewModel> _allDecks = new ObservableCollection<DecksViewModel>();
-        public ObservableCollection<DecksViewModel> AllDecks
+        private ObservableCollection<DeckViewModel> _allDecks = new ObservableCollection<DeckViewModel>();
+        public ObservableCollection<DeckViewModel> AllDecks
         {
             get { return this._allDecks; }
         }
@@ -126,7 +126,7 @@ namespace Flashcard.DataModel
         // add
         // edit
         // delete
-        public static ObservableCollection<DecksViewModel> GetDecks(CategoriesViewModel category)
+        public static ObservableCollection<DeckViewModel> GetDecks(CategoriesViewModel category)
         {
             _flashcardDataSource._allDecks.Clear();
 
@@ -135,7 +135,7 @@ namespace Flashcard.DataModel
                 var decks = database.Table<Deck>().Where(d1 => d1.Id.ToString() == category.UniqueId).OrderBy(d2 => d2.Title);
                 foreach (var deck in decks)
                 {
-                    DecksViewModel flashcardDataDeck = new DecksViewModel(""+deck.Id, 
+                    DeckViewModel flashcardDataDeck = new DeckViewModel(""+deck.Id, 
                                                                                 category,
                                                                                 deck.Title,
                                                                                 deck.Author,
@@ -148,7 +148,7 @@ namespace Flashcard.DataModel
             return _flashcardDataSource.AllDecks;
         }
 
-        public static DecksViewModel GetDeck(String uniqueId)
+        public static DeckViewModel GetDeck(String uniqueId)
         {
             foreach (var _deck in _flashcardDataSource._allDecks)
                 if (_deck.UniqueId == uniqueId)
@@ -156,7 +156,7 @@ namespace Flashcard.DataModel
             return null;
         }
 
-        public static void AddDeck(DecksViewModel deck)
+        public static void AddDeck(DeckViewModel deck)
         {
             using (var database = new SQLiteConnection(databasePath))
             {
@@ -173,7 +173,7 @@ namespace Flashcard.DataModel
             }
         }
 
-        public static void UpdateDeck(DecksViewModel deck)
+        public static void UpdateDeck(DeckViewModel deck)
         {
             using (var database = new SQLiteConnection(databasePath))
             {
@@ -191,7 +191,7 @@ namespace Flashcard.DataModel
             }
         }
 
-        public static void DeleteDeck(DecksViewModel deck)
+        public static void DeleteDeck(DeckViewModel deck)
         {
             using (var database = new SQLiteConnection(databasePath))
             {
@@ -207,7 +207,7 @@ namespace Flashcard.DataModel
         // add
         // edit
         // delete
-        public static ObservableCollection<CardsViewModel> GetCards(DecksViewModel deck)
+        public static ObservableCollection<CardsViewModel> GetCards(DeckViewModel deck)
         {
             // Simple linear search is acceptable for small data sets
             _flashcardDataSource._allCards.Clear();
