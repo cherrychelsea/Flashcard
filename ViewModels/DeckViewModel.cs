@@ -158,5 +158,95 @@ namespace Flashcard.ViewModels
 
             return deck;
         }
+
+        public async Task<string> GetDeckTitle(int deckId)
+        {
+            var title = String.Empty;
+
+            var db = new SQLiteAsyncConnection(App.DBPath);
+            var _deck = await db.FindAsync<Deck>(d1 => d1.Id == deckId);
+
+            if (_deck != null)
+            {
+                title = _deck.Title;
+            }
+            return title;
+        }
+
+        public async Task<string> GetDeckDescription(int deckId)
+        {
+            var description = String.Empty;
+
+            var db = new SQLiteAsyncConnection(App.DBPath);
+            var _deck = await db.FindAsync<Deck>(d1 => d1.Id == deckId);
+
+            if (_deck != null)
+            {
+                description = _deck.Description;
+            }
+            return description;
+        }
+
+        public async Task<string> SaveDeck(DeckViewModel deck)
+        {
+            string result = String.Empty;
+            var db = new SQLiteAsyncConnection(App.DBPath);
+
+            try
+            {
+                var existingDeck = await (db.Table<Deck>().Where(d1 => d1.Id == deck.Id)).FirstOrDefaultAsync();
+
+                if (existingDeck != null)
+                {
+                    existingDeck.Title = deck.Title;
+                    existingDeck.Author = deck.Author;
+                    existingDeck.Description = deck.Description;
+                    existingDeck.Subject = deck.Subject;
+
+                    int success = await db.UpdateAsync(existingDeck);
+                }
+                else
+                {
+                    var _deck = new Deck();
+                    _deck.Title = deck.Title;
+                    _deck.Author = deck.Author;
+                    _deck.Description = deck.Description;
+                    _deck.Subject = deck.Subject;
+
+                    int success = await db.InsertAsync(_deck);
+                }
+                result = "Success";
+            }
+            catch
+            {
+                result = "this deck was not saved";
+            }
+            return result;
+        }
+
+        public async Task<string> DeleteDeck(int deckId)
+        {
+            string result = string.Empty;
+            var db = new SQLite.SQLiteAsyncConnection(App.DBPath);
+
+            var existingDeck = await (db.Table<Deck>().Where(
+                d => d.Id == deckId)).FirstAsync();
+
+            try
+            {
+                var _cards = await db.Table<Card>().Where(c1 => c1.DeckId == existingDeck.Id).ToListAsync();
+                foreach (var _card in _cards)
+                {
+                    int s = await db.DeleteAsync(_card);
+                }
+                int succcess = await db.DeleteAsync(existingDeck);
+                result = "Success";
+            }
+            catch
+            {
+                result = "This project was not removed";
+            }
+            return result;
+        }
     }
 }

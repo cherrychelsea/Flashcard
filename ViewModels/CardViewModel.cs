@@ -124,10 +124,8 @@ namespace Flashcard.ViewModels
             var db = new SQLiteAsyncConnection(App.DBPath);
             var _card = await db.FindAsync<Card>(c1 => c1.Id == cardId);
 
-            if (_card == null)
-                return null;
-
-            frontContent = _card.FrontContent;
+            if (_card != null)
+                frontContent = _card.FrontContent;
 
             return frontContent;
         }
@@ -139,10 +137,8 @@ namespace Flashcard.ViewModels
             var db = new SQLiteAsyncConnection(App.DBPath);
             var _card = await db.FindAsync<Card>(c1 => c1.Id == cardId);
 
-            if (_card == null)
-                return null;
-
-            backContent = _card.BackContent;
+            if (_card != null)
+                backContent = _card.BackContent;
 
             return backContent;
         }
@@ -184,10 +180,10 @@ namespace Flashcard.ViewModels
             string result = string.Empty;
             var db = new SQLite.SQLiteAsyncConnection(App.DBPath);
 
-            var existingProject = await (db.Table<Card>().Where(
+            var existingCard = await (db.Table<Card>().Where(
                 c => c.Id == cardId)).FirstAsync();
 
-            if (await db.DeleteAsync(existingProject) > 0)
+            if (await db.DeleteAsync(existingCard) > 0)
             {
                 result = "Success";
             }

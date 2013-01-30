@@ -15,7 +15,7 @@ namespace Flashcard
         {
         }
 
-        public static CategoriesViewModel GetCategory(String name)
+        public static CategoryViewModel GetCategory(String name)
         {
             var _categories = FlashcardDataSource.GetCategories("");
             foreach(var _category in _categories)
@@ -26,15 +26,15 @@ namespace Flashcard
 
         public static void ClickAddCategory(String name)
         {
-            CategoriesViewModel _category = GetCategory(name);
+            CategoryViewModel _category = GetCategory(name);
             if (_category == null)
             {
-                CategoriesViewModel newCategory = new CategoriesViewModel("",name);
+                CategoryViewModel newCategory = new CategoryViewModel("",name);
                 FlashcardDataSource.AddCategory(newCategory);
             }
         }
 
-        public static void ClickEditCategory(CategoriesViewModel category, String newCategoryName)
+        public static void ClickEditCategory(CategoryViewModel category, String newCategoryName)
         {
             if (category != null)
             {
@@ -43,13 +43,13 @@ namespace Flashcard
             }
         }
 
-        public static void ClickDeleteCategory(CategoriesViewModel category)
+        public static void ClickDeleteCategory(CategoryViewModel category)
         {
             if (category != null)
                 FlashcardDataSource.DeleteCategory(category);
         }
 
-        public static DeckViewModel GetDeck(CategoriesViewModel category,String title)
+        public static DeckViewModel GetDeck(CategoryViewModel category,String title)
         {
             var _decks = FlashcardDataSource.GetDecks(category);
             foreach (var _deck in _decks)
@@ -60,7 +60,7 @@ namespace Flashcard
             return null;
         }
 
-        public static void ClickAddDeck(String title, String author, String subject, String description, String imagePath, CategoriesViewModel category)
+        public static void ClickAddDeck(String title, String author, String subject, String description, String imagePath, CategoryViewModel category)
         {
             var _deck = GetDeck(category, title);
             if (_deck == null)

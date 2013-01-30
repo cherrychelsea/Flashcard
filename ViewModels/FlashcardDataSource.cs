@@ -28,7 +28,7 @@ namespace Flashcard.DataModel
                 database.CreateTable<Deck>();
                 database.CreateTable<Card>();
             }
-            var category1 = new CategoriesViewModel("", "english");
+            var category1 = new CategoryViewModel("", "english");
             AddCategory(category1);
             AllCategories.Add(category1);
             var deck1 = new DeckViewModel("", category1, "1001 words need to know", "Thang", "toefl", "", "");
@@ -39,8 +39,8 @@ namespace Flashcard.DataModel
             AllCards.Add(card1);
         }
 
-        private ObservableCollection<CategoriesViewModel> _allCategories = new ObservableCollection<CategoriesViewModel>();
-        public ObservableCollection<CategoriesViewModel> AllCategories
+        private ObservableCollection<CategoryViewModel> _allCategories = new ObservableCollection<CategoryViewModel>();
+        public ObservableCollection<CategoryViewModel> AllCategories
         {
             get { return this._allCategories; }
         }
@@ -62,7 +62,7 @@ namespace Flashcard.DataModel
         // add
         // edit
         // delete
-        public static ObservableCollection<CategoriesViewModel> GetCategories(String uniqueId)
+        public static ObservableCollection<CategoryViewModel> GetCategories(String uniqueId)
         {
             _flashcardDataSource._allCategories.Clear();
 
@@ -71,14 +71,14 @@ namespace Flashcard.DataModel
                 var _categories = database.Table<Category>().OrderBy(c1 => c1.Name);
                 foreach (var _category in _categories)
                 {
-                    CategoriesViewModel categoriesViewModel = new CategoriesViewModel(_category.Id.ToString(), _category.Name);
+                    CategoryViewModel categoriesViewModel = new CategoryViewModel(_category.Id.ToString(), _category.Name);
                     _flashcardDataSource._allCategories.Add(categoriesViewModel);
                 }
             }
             return _flashcardDataSource._allCategories;
         }
 
-        public static CategoriesViewModel GetCategory(String uniqueId)
+        public static CategoryViewModel GetCategory(String uniqueId)
         {
             foreach (var _category in _flashcardDataSource._allCategories)
                 if (_category.UniqueId == uniqueId)
@@ -86,7 +86,7 @@ namespace Flashcard.DataModel
             return null;
         }
 
-        public static void AddCategory(CategoriesViewModel category)
+        public static void AddCategory(CategoryViewModel category)
         {
             using (var database = new SQLiteConnection(databasePath))
             {
@@ -99,7 +99,7 @@ namespace Flashcard.DataModel
             }
         }
 
-        public static void UpdateCategory(CategoriesViewModel category)
+        public static void UpdateCategory(CategoryViewModel category)
         {
             using (var database = new SQLiteConnection(databasePath))
             {
@@ -112,7 +112,7 @@ namespace Flashcard.DataModel
             }
         }
 
-        public static void DeleteCategory(CategoriesViewModel category)
+        public static void DeleteCategory(CategoryViewModel category)
         {
             using (var database = new SQLiteConnection(databasePath))
             {
@@ -126,7 +126,7 @@ namespace Flashcard.DataModel
         // add
         // edit
         // delete
-        public static ObservableCollection<DeckViewModel> GetDecks(CategoriesViewModel category)
+        public static ObservableCollection<DeckViewModel> GetDecks(CategoryViewModel category)
         {
             _flashcardDataSource._allDecks.Clear();
 

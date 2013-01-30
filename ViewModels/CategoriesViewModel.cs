@@ -1,32 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using SQLite;
+using Flashcard.Models;
 namespace Flashcard.ViewModels
 {
-    [Windows.Foundation.Metadata.WebHostHidden]
-    public class CategoriesViewModel : Flashcard.Common.BindableBase
+    class CategoriesViewModel:ViewModelBase
     {
-        private String _uniqueId;
-        public String UniqueId
+        private ObservableCollection<CategoryViewModel> _categories;
+        public ObservableCollection<CategoryViewModel> Categories
         {
-            get { return this._uniqueId; }
-            set { this.SetProperty(ref this._uniqueId, value); }
+            get 
+            {
+                return _categories;
+            }
+            set
+            {
+                _categories = value;
+                RaisePropertyChanged("Categories");
+            }
         }
 
-        private String _name;
-        public String Name
+        public async Task<ObservableCollection<CategoryViewModel>> GetCategories()
         {
-            get { return this._name; }
-            set { this.SetProperty(ref this._name, value); }
-        }
+            _categories = new ObservableCollection<CategoryViewModel>();
+            var db = new SQLiteAsyncConnection(App.DBPath);
 
-        public CategoriesViewModel(String uniqueId, String name)
-        {
-            this._uniqueId = uniqueId;
-            this._name = name;
+            var query = await db.Table<Category>().OrderBy(c => c.Name).ToListAsync();
+
+            foreach (var c in query)
+            {
+                var _category = new CategoryViewModel();
+                _category.Id = c.Id;
+                _category.Name = c.Name;
+
+                _categories.Add(_category);
+            }
+            return _categories;
         }
     }
 }
