@@ -58,7 +58,7 @@ namespace Flashcard.Views
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(DeckPage));
+            this.Frame.Navigate(typeof(CategoryPage));
         }
 
         private void CategoriesGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -82,7 +82,7 @@ namespace Flashcard.Views
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(DeckPage), CategoriesGridView.SelectedItem);
+            this.Frame.Navigate(typeof(CategoryPage), CategoriesGridView.SelectedItem);
         }
 
     }

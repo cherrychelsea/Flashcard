@@ -126,6 +126,9 @@
     <Compile Include="ViewModels\DecksViewModel.cs" />
     <Compile Include="ViewModels\DeckViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\CategoryPage.xaml.cs">
+      <DependentUpon>CategoryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DeckPage.xaml.cs">
       <DependentUpon>DeckPage.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,10 @@
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CategoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DeckPage.xaml">
       <SubType>Designer</SubType>
