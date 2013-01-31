@@ -398,6 +398,7 @@ namespace Flashcard.Common
 
         #endregion
 
+
         /// <summary>
         /// Implementation of IObservableMap that supports reentrancy for use as a default view
         /// model.

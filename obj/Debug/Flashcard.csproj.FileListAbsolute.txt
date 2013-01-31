@@ -25,3 +25,12 @@ C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Deb
 C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Debug\pri.resfiles
 C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Debug\LanguageQualifiers.txt
 C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Debug\ProjectArchitectures.txt
+C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Debug\Views\StartPage.g.i.cs
+C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Debug\Views\StartPage.g.cs
+C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Debug\Views\StartPage.xaml
+C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Debug\Views\CategoryPage.g.i.cs
+C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Debug\Views\CategoryPage.g.cs
+C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Debug\Views\DeckPage.g.i.cs
+C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Debug\Views\DeckPage.g.cs
+C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Debug\Views\CategoryPage.xaml
+C:\Users\Thang\documents\visual studio 2012\Projects\Flashcard\Flashcard\obj\Debug\Views\DeckPage.xaml
