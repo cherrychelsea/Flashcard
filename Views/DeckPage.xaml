@@ -6,8 +6,115 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
+    
+    <Page.BottomAppBar>
+        <AppBar x:Name="ProjectPageAppBar"
+                Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
+                IsOpen="True"
+                IsSticky="True">
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Top">
+                <Button x:Name="SaveButton"
+                        Style="{StaticResource SaveAppBarButtonStyle}"
+                        
+                        Click="SaveButton_Click"/>
+            </StackPanel>
+        </AppBar>
+    </Page.BottomAppBar>
+    
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BackButton" 
+                    Click="BackButton_Click" 
+                    Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="PageTitle" 
+                       Text="New Deck" 
+                       Grid.Column="1" 
+                       IsHitTestVisible="false" 
+                       Style="{StaticResource PageHeaderTextStyle}"/>
+        </Grid>
+        <StackPanel Grid.Row="1" 
+                    Orientation="Vertical"
+                    Margin="120,0,0,0">
+            <TextBlock Text="Category"                          
+                       HorizontalAlignment="Left"
+                       Margin="0,15,0,0"
+                       Foreground="White"
+                       FontSize="16"/>
+            <ComboBox x:Name="CategoryComboBox"
+                      Width="400"
+                      Height="35"
+                      VerticalContentAlignment="Center"
+                      HorizontalAlignment="Left"
+                      BorderBrush="White"
+                      Margin="0,15,0,5"/>
+            <TextBlock Text="{Binding Categories, Mode=TwoWay}"                          
+                       HorizontalAlignment="Left"
+                       Margin="0,15,0,0"
+                       Foreground="White"
+                       FontSize="16"/>
+            <TextBox x:Name="TitleTextBox" 
+                     Text="{Binding Title, Mode=TwoWay}" 
+                     Width="400" 
+                     Height="25"
+                     TextWrapping="Wrap"
+                     Margin="0,15,0,5"
+                     HorizontalAlignment="Left"
+                     VerticalContentAlignment="Center"
+                     BorderBrush="White"/>
+            <TextBlock Text="Author"
+                       HorizontalAlignment="Left"
+                       Margin="0,15,0,0"
+                       Foreground="White"
+                       FontSize="16"/>
+            <TextBox x:Name="AuthorTextBox"
+                     Text="{Binding Author, Mode=TwoWay}" 
+                     Width="400" 
+                     Height="25"
+                     TextWrapping="Wrap"
+                     Margin="0,15,0,5"
+                     HorizontalAlignment="Left"
+                     VerticalContentAlignment="Center"
+                     BorderBrush="White"/>
+            <TextBlock Text="Subject"
+                       HorizontalAlignment="Left"
+                       Margin="0,15,0,0"
+                       Foreground="White"
+                       FontSize="16"/>
+            <TextBox x:Name="SubjectTextBox"
+                     Text="{Binding Subject, Mode=TwoWay}" 
+                     Width="400" 
+                     Height="25"
+                     TextWrapping="Wrap"
+                     Margin="0,15,0,5"
+                     HorizontalAlignment="Left"
+                     VerticalContentAlignment="Center"
+                     BorderBrush="White"/>
+            <TextBlock Text="Decsription"
+                       HorizontalAlignment="Left"
+                       Margin="0,15,0,0"
+                       Foreground="White"
+                       FontSize="16"/>
+            <TextBox x:Name="DescriptionTextBox"
+                     Text="{Binding Description, Mode=TwoWay}" 
+                     Width="400" 
+                     Height="200"
+                     TextWrapping="Wrap"
+                     Margin="0,15,0,5"
+                     HorizontalAlignment="Left"
+                     VerticalContentAlignment="Center"
+                     BorderBrush="White"/>
+        </StackPanel>
     </Grid>
 </Page>
