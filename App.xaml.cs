@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Flashcard.Views;
 using SQLite;
+using Flashcard.Models;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
@@ -31,7 +32,7 @@ namespace Flashcard
         /// </summary>
         /// 
 
-        public static String DBPath;
+        public static string DBPath = String.Empty;
         public static int CurrentCategoryId { get; set; }
 
         public App()
@@ -62,11 +63,13 @@ namespace Flashcard
                     //TODO: Load state from previously suspended application
                 }
 
-                DBPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "MyDatabase.db");
-
+                DBPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "MyDatabase.s3db");
+                //DBPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "customers.s3db");
                 using (var db = new SQLiteConnection(DBPath))
                 {
- 
+                    db.CreateTable<Category>();
+                    db.CreateTable<Deck>();
+                    db.CreateTable<Card>();
                 }
 
                 // Place the frame in the current Window
