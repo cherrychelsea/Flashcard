@@ -70,24 +70,66 @@ namespace Flashcard
                     db.CreateTable<Category>();
                     db.CreateTable<Deck>();
                     db.CreateTable<Card>();
+                    
                 }
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
 
+            //
+            ResetData();
+            
+            //
+
             if (rootFrame.Content == null)
             {
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (!rootFrame.Navigate(typeof(MainPage), args.Arguments))
+                if (!rootFrame.Navigate(typeof(MainPage)))
                 {
                     throw new Exception("Failed to create initial page");
                 }
             }
             // Ensure the current window is active
             Window.Current.Activate();
+        }
+
+
+        private async void ResetData()
+        {
+            var db = new SQLite.SQLiteAsyncConnection(DBPath);
+
+            // Empty the Customer and Project tables 
+            var categories = await db.Table<Category>().ToListAsync();
+            foreach (Category c in categories)
+            {
+                await db.DeleteAsync(c);
+            }
+            var decks = await db.Table<Deck>().ToListAsync();
+            foreach (Deck d in decks)
+            {
+                await db.DeleteAsync(d);
+            }
+
+            // Add seed customers and projects
+            var newCategory1 = new Category()
+            {
+                Name = "abc"
+            };
+            await db.InsertAsync(newCategory1);
+            var newCategory2 = new Category()
+            {
+                Name = "xyz"
+            };
+            await db.InsertAsync(newCategory2);
+            var newCategory3 = new Category()
+            {
+                Name = "123"
+            };
+            await db.InsertAsync(newCategory3);
+           
         }
 
         /// <summary>
