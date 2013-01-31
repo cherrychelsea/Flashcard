@@ -23,7 +23,7 @@
                     Click="BackButton_Click" 
                     Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="PageTitle" 
-                       Text="Flash Card" 
+                       Text="New Category" 
                        Grid.Column="1" 
                        IsHitTestVisible="false" 
                        Style="{StaticResource PageHeaderTextStyle}"/>
