@@ -152,10 +152,5 @@ namespace Flashcard.ViewModels
             }
             return result;
         }
-
-        public override string ToString()
-        {
-            return _name;
-        }
     }
 }
